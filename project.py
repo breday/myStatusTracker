@@ -41,7 +41,6 @@ def sign_in():
         user = sessions.query(Users).filter_by(username =request.form['username'], password=request.form['password']).one()
         flash(u'You were successfully logged in', "success" )
         session['id'] = user.id
-
         session['logged'] = True
     return render_template("")"""
 
