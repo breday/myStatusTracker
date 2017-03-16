@@ -19,19 +19,19 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def sign_in():
-    """Login functionality"""
+    """ Login functionality """
 
     if request.method == 'POST':
         user = sessions.query(Users).filter_by(username =request.form['username'], password=request.form['password']).one()
         flash(u'You are logged in', "success" )
         session['Username'] = request.form['username']
-        session['user_type'] = request.form['username']
+        session['user_type'] = request.form['admin']
         session['id'] = user.id
         session['logged'] = True
         if user.user_type == 'admin':
-            return redirect(url_for(''))
+            return redirect(url_for('sign_up'))
         else:
-            return redirect(url_for(''))
+            return redirect(url_for('profile'))
             return render_template("signup.html")
 
 
