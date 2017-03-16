@@ -34,6 +34,18 @@ def viewissue():
     return render_template('Viewissue.html')
 
 
+"""@app.route('/login', methods=['GET', 'POST'])
+def sign_in():
+    """This function implements login"""
+    if request.method == 'POST':
+        user = sessions.query(Users).filter_by(username =request.form['username'], password=request.form['password']).one()
+        flash(u'You were successfully logged in', "success" )
+        session['id'] = user.id
+
+        session['logged'] = True
+    return render_template("")"""
+
+
 if __name__ == '__main__':
     app.secret_key = "secret_key"
     port = int(os.environ.get('PORT', 5000))
