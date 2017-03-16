@@ -19,7 +19,7 @@ class User(Base):
     user_id = Column(Integer, primary_key=True)
     user_type = Column(String(250), nullable=False)
     f_name = Column(String(250), nullable=False)
-    s_type = Column(String(250), nullable=False)
+    s_name = Column(String(250), nullable=False)
     username = Column(String(250), nullable=False)
     password = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)
