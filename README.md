@@ -2,6 +2,8 @@
 Andela Bootcamp Project
 
 
+Requirements
+
 Build a simple issue tracker application
 
 As a user, I should be able to sign-in / sign-up
