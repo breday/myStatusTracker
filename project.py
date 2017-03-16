@@ -35,8 +35,8 @@ def viewissue():
 
 
 """@app.route('/login', methods=['GET', 'POST'])
-def sign_in():
-    """This function implements login"""
+def login():
+    """This login login"""
     if request.method == 'POST':
         user = sessions.query(Users).filter_by(username =request.form['username'], password=request.form['password']).one()
         flash(u'You were successfully logged in', "success" )
