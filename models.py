@@ -24,10 +24,6 @@ class User(Base):
     password = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)
 
-
-    def __repr__(self):
-        return '<Issue: {}>'.format(self.title)
-
     
 class Issue(Base):
 
@@ -43,10 +39,6 @@ class Issue(Base):
     department = Column(String(250), nullable= True)
     issue_status = Column(String(250), nullable= True)
     remarks = Column(String(250), nullable= True)
-
-    def __repr__(self):
-        return '<Issue: {}>'.format(self.title)
-
 
 engine = create_engine('sqlite:///tracker.db')
 Base.metadata.create_all(engine)
