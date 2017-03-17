@@ -1,0 +1,4 @@
+/flaskenv/
+*.pyc
+*.db
+
