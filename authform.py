@@ -40,5 +40,18 @@ class RegistrationForm(FlaskForm):
     def validate_username(self, field):
         if sessions.query(User).filter_by(username=field.data).first():
         	raise ValidationError('Username is already in use.')
+            
+            
+ Class Issue(FlaskForm):
+	"""
+	Form for users to report issue
+	"""
+	title = StringField('Title', validators=[DataRequired()])
+	description = StringField('Description', validators=[DataRequired()])
+	priority = StringField('Priority', validators=[DataRequired()])
+	department = StringField('Department', validators=[DataRequired()])
+	issue_status= PasswordField('Issue Status', validators=[DataRequired()])
+	remarks = StringField('Last Name', validators=[DataRequired()])
+	submit = SubmitField('issue')       
 
 
