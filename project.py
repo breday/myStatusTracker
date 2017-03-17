@@ -3,61 +3,66 @@ from flask import Flask, render_template, redirect, session, request, url_for, f
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine, update
 from sqlalchemy.orm import sessionmaker
-from models import Base, Issue, User
+from models import Base, Issue, User,engine
+from authform import LoginForm,RegistrationForm
+from flask_login import login_required,login_user, logout_user, current_user
+from flask_bootstrap import Bootstrap
+
 
 app = Flask(__name__)
-app.secret_key = ""
+Bootstrap(app)
+
 
 Base.metadata.create_all(engine)
 DBSession =  sessionmaker(bind=engine)
 sessions = DBSession()
 
 
-@app.route('/index')
+@app.route('/')
 def index():
         return render_template('home.html')
 
-@app.route('/login', methods=['GET', 'POST'])
+
+@app.route('/admin/')
+def admin():
+    return render_template('adminviews.html')
+
+
+@app.route('/login/', methods=['GET', 'POST'])
 def sign_in():
-    """ Login functionality """
+    """Login functionality"""
 
-    if request.method == 'POST':
-        user = sessions.query(Users).filter_by(username =request.form['username'], password=request.form['password']).one()
-        flash(u'You are logged in', "success" )
-        session['Username'] = request.form['username']
-        session['user_type'] = request.form['admin']
-        session['id'] = user.id
-        session['logged'] = True
-        if user.user_type == 'admin':
-            return redirect(url_for('sign_up'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = sessions.query(User).filter_by(email=form.email.data).first()
+        if user is not None and user.verify_password(
+                form.password.data):
+            login_user(user)
+            if user.is_admin:
+                return redirect(url_for('admin'))
+            else:
+                return redirect(url_for('index'))
         else:
-            return redirect(url_for('profile'))
-            return render_template("signup.html")
+            flash('Invalid email or password.')
 
+    return render_template('login.html', form=form, title='Login')
 
-@app.route('/signup', methods=['GET', 'POST'] )
-def sign_up():
-    """User signs in """
-    if request.method == 'POST':
-    	user_type = request.form['user_type']
-        f_name = request.form['first name']
-        l_name = request.form['last name']
-        username = request.form['username']
-        password = request.form['password']
-        email = request.form['email']
-
-        
-        if role == 'admin':
-            admin = sessions.query(User).filter_by(user_type = 'admin')
-            if admin != None:
-                flash(u'Sorry there is an admin!!', "error")
-                return render_template("signup.html")
-        newuser = Users(username=username, password=password, email=email)
-        sessions.add(newuser)
+    
+@app.route('/register/', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(email=form.email.data,
+                            username=form.username.data,
+                            f_name=form.first_name.data,
+                            l_name=form.last_name.data,
+                            password=form.password.data)
+        sessions.add(user)
         sessions.commit()
-        flash(u'You are successfully signed up', "success")
+        flash('You have been registered successfully.')
         return redirect(url_for('sign_in'))
-    return render_template("signup.html")
+
+    return render_template('register.html', form=form, title='Register')
 
 
 @app.route('/signin/newissue', methods=['GET', 'POST'] )
@@ -109,7 +114,7 @@ def update_issue():
         title = request.form['title']
         status = request.form['status']
         comment = request.form['comment']
-        edit_issue = update(Issues).where(id==int(id)).values(name=title, resolved=status, remarks=comment)
+        edit_issue = update(Issues).where(id==int(id)).values(name=title, remarks=comment)
         sessions.execute(edit_issue)
         sessions.commit()
         flash(u'Issue is updated!', "success")
@@ -122,10 +127,4 @@ if __name__ == '__main__':
     app.secret_key = "secret_key"
     port = int(os.environ.get('PORT', 5000))
     app.run(host='127.0.0.1', port=port, debug=True)
-
-
-
-
-
-
 
