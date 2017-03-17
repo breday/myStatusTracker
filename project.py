@@ -83,7 +83,7 @@ def new_issue():
         else:
             return render_template("newissue.html", user=username)
     else:
-        return redirect(url_for('profile'))
+        return redirect(url_for('index'))
 
 
 app.route('/user/viewissues')
@@ -113,14 +113,14 @@ def update_issue():
         id = request.form['issue_id']
         title = request.form['title']
         status = request.form['status']
-        comment = request.form['comment']
-        edit_issue = update(Issues).where(id==int(id)).values(name=title, remarks=comment)
+        remarks = request.form['remarks']
+        edit_issue = update(Issues).where(id==int(id)).values(name=title, remarks=remarks)
         sessions.execute(edit_issue)
         sessions.commit()
         flash(u'Issue is updated!', "success")
 
 
-    return redirect(url_for("admin_view_issues"))
+    return redirect(url_for("index"))
 
 
 if __name__ == '__main__':
