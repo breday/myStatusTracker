@@ -42,7 +42,7 @@ class RegistrationForm(FlaskForm):
         	raise ValidationError('Username is already in use.')
             
             
- Class Issue(FlaskForm):
+class Issue(FlaskForm):
 	"""
 	Form for users to report issue
 	"""

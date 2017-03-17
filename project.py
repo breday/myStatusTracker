@@ -86,7 +86,7 @@ def new_issue():
         return redirect(url_for('index'))
 
 
-app.route('/user/viewissues')
+app.route('/login/viewissues')
 def user_view_issues():
     """function lets users view issues"""
     results = sessions.query(Issues).filter_by(user_id = session['id']).all()
