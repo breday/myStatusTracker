@@ -4,7 +4,7 @@ Installation
 
 $ git clone https://github.com/breday/myStatusTracker
 
-$ cd issue_tracker
+$ cd mystatusTracker
 
 Create and activate a virtual environment.
 
