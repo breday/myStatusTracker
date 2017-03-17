@@ -1,23 +1,17 @@
-<html>
-<head>
+{% import "bootstrap/utils.html" as utils %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block body %}
+<div class="content-section" style="height: 120px;padding-top: 150px;padding-left: 120px;padding-right: 140px;padding-bottom: 120px;">
+  <br/>
+  {{ utils.flashed_messages() }}
+  <br/>
+  <div class="center" style="padding-left: 100px;border: aquamarine;">
+    <h1>Login to your account</h1>
+    <br/>
+    {{ wtf.quick_form(form) }}
+  </div>
+</div>
+{% endblock %}
 
-</head>
-  <body>
-    
-    <div class="container">
-      <h1> Login here</h1>
-      <br>
-      <form action="" method="post">
-        <input type="text" placeholder="Username" name="username" value="email">
-        <br>
-         <input type="password" placeholder="Password" name="password" value="password">
-         <br>
-        <input class="btn btn-default" type="submit" value="Login">
-      </form>
-
-
-
-    </div>
-
-  </body>
-</html>
