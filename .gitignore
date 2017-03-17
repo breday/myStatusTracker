@@ -1,5 +1,4 @@
-sqbpro/flaskenv/
+flaskenv/
 *.pyc
 *.db
 *.sqbpro
-
