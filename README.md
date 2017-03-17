@@ -1,8 +1,8 @@
-# myStatusTracker
+# ISSUE TRACKER APP
 
 Installation
 
-$ git clone https://github.com/breday/issue_tracker.git
+$ git clone https://github.com/breday/myStatusTracker
 
 $ cd issue_tracker
 
